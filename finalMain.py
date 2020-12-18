@@ -1,4 +1,24 @@
-# libraries
+#  JHU Course EN.605.651.81.FA20 Principles of Bioinformatics
+#  Author: Kyle Hartner
+#  Date: 12/08/2020
+#  Problem:  Implement a K Means Clustering Algorithm and compare to Available Open Source Clustering Methods
+#																					Input
+#  Functions:   def sortClusters(distanceMatrix, numCenteriods, samples):       	distanceMatrix = Array with samples! values representing the distance from each sample to all samples 
+# 																					numCenteriods = user defined k value
+# 																					samples = derived from samples included in read in text file
+# 				def addIntialCentriods(rawData, ks):	       						rawData=2D MicroArray Intensity Matrix including Sample and Gene Labels
+# 																					ks= array with sample value to setting initial centroid
+# 				def addSamples(rawData, intialCentriods):							rawData=2D MicroArray Intensity Matrix including Sample and Gene Labels
+# 																					intialCentriods = based on ks is all associated gene intensity values for starting Centroid
+# 				def setMeanCentriods(centroids, rawData):							centroids = k x # of genes intensity array to be added to raw data for distance calc
+# 																					rawData=2D MicroArray Intensity Matrix including Sample and Gene Labels
+# 				def eclideanDistance(rawData):										rawData=2D MicroArray Intensity Matrix including Sample and Gene Labels
+# 				def kMeansCentriods(requestedCentriods, samples, distArray):		requestedCentriods = numCenteriod s= user defined k value
+# 																					samples = derived from samples included in read in text file
+# 																					distArray= Array with samples! values representing the distance from each sample to all samples 
+# 				def plotDistance(rawData, graphArray):								rawData=2D MicroArray Intensity Matrix including Sample and Gene Labels
+# 																					graphArray= Array with samples! values representing the distance from each sample to all samples 
+#  
 import math
 import time
 import operator
@@ -28,7 +48,7 @@ def main():
 	# K-Means
 	# Choose X furtherest appart Sampels as your centroids
 	samples=len(rawData[0])-1
-	numCenteriods=3
+	numCenteriods=2
 	
 	ks=kMeansCentriods(numCenteriods , samples ,graphArray)
 	print("Furtherest apart samples and starting centriods are: ")
@@ -63,26 +83,20 @@ def main():
 
 	start_time = time.clock()
 	X = np.array(cleanedData)
-	kmeans = KMeans(n_clusters=2, init='k-means++', n_init=10, max_iter=300, verbose=0, random_state=None).fit(X)
-	#print (
-	kmeans.cluster_centers_
-	#)
+	kmeans = KMeans(n_clusters=2, init='k-means++', n_init=4, max_iter=300, verbose=1, random_state=None).fit(X)
+	print(kmeans.cluster_centers_)
 	print("SKLEARN \"AUTO\"  Algorithim")
-	print (time.clock() - start_time, "seconds")
+	print(time.clock() - start_time, "seconds")
 
 	start_time = time.clock()
-	kmeans = KMeans(algorithm='full', n_clusters=2, init='k-means++', n_init=10, max_iter=300, verbose=0, random_state=None).fit(X)
-	#print (
-	kmeans.cluster_centers_
-	#)
+	kmeans = KMeans(algorithm='full', n_clusters=2, init='k-means++', n_init=4, max_iter=300, verbose=1, random_state=None).fit(X)
+	print(kmeans.cluster_centers_)
 	print("SKLEARN \"FULL\"  Algorithim")
-	print (time.clock() - start_time, "seconds")
+	print(time.clock() - start_time, "seconds")
 
 	start_time = time.clock()
-	kmeans = KMeans(algorithm='elkan', n_clusters=2, init='k-means++', n_init=10, max_iter=300, verbose=0, random_state=None).fit(X)
-	#print (
-	kmeans.cluster_centers_
-	#)
+	kmeans = KMeans(algorithm='elkan', n_clusters=2, init='k-means++', n_init=4, max_iter=300, verbose=1, random_state=None).fit(X)
+	print(kmeans.cluster_centers_)
 	print("SKLEARN \"ELKAN\"  Algorithim")
 	print (time.clock() - start_time, "seconds")
 
@@ -93,7 +107,7 @@ def main():
 	centroid, label = kmeans2(cleanedData, 2, minit='points')
 	print(centroid)
 	print("SCIPY \"KMEAN2\"  Algorithim")
-	print (time.clock() - start_time, "seconds")
+	print(time.clock() - start_time, "seconds")
 
 def sortClusters(distanceMatrix, numCenteriods, samples):
 	finalClusters=[]
